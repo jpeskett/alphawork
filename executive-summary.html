@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Summary - Math Growth Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #34495e;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #2c3e50;
+        }
+
+        nav a.active {
+            background-color: #1a252f;
+            font-weight: 600;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .content-card {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            color: #34495e;
+            margin: 1.5rem 0 0.75rem 0;
+            font-size: 1.2rem;
+        }
+
+        h4 {
+            color: #2c3e50;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .alert-box {
+            background-color: #fadbd8;
+            border-left: 4px solid #e74c3c;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box {
+            background-color: #fef5e7;
+            border-left: 4px solid #f39c12;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box {
+            background-color: #d6eaf8;
+            border-left: 4px solid #3498db;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-box {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .root-cause-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .root-cause-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 4px solid #e74c3c;
+        }
+
+        .root-cause-card h4 {
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .recommendation-section {
+            background: #eafaf1;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #27ae60;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th {
+            background-color: #34495e;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.75rem;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        strong {
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Math Growth Analysis Report</h1>
+            <p class="subtitle">Fall 2025 to Winter 2026 | K-8 Math Performance Analysis</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="executive-summary.html" class="active">Executive Summary</a></li>
+            <li><a href="struggling-students.html">Struggling Students</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="content-card">
+                <h2>Executive Summary: Why Students Didn't Achieve 2× Growth</h2>
+                <p>Based on analysis of 398 math students with Fall-to-Winter growth data, this report identifies three systemic curriculum issues preventing students from achieving predicted growth rates.</p>
+                
+                <div class="alert-box">
+                    <strong>Overall Finding:</strong> 227 students (57.2%) did not achieve 2× growth. Average actual growth was 2.08× versus 2.65× predicted—representing a significant 22% performance gap.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>The Three Root Causes</h2>
+                
+                <div class="root-cause-grid">
+                    <div class="root-cause-card">
+                        <h4>1. The Grade 6 Number Systems "Black Hole"</h4>
+                        <p><strong>The Problem:</strong> Math Academy Grade 5 focuses heavily on fraction/decimal procedures, while MA Prealgebra jumps straight to high school level radicals and exponents.</p>
+                        <p style="margin-top: 1rem;"><strong>The Gap:</strong> Critical middle-tier skills are skipped entirely:</p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Integer operations (adding/subtracting negatives)</li>
+                            <li>Absolute value concepts</li>
+                            <li>Four-quadrant coordinate plane</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Impact:</strong> Students attempt Algebra II content while missing the Grade 6 foundations that drive MAP RIT scores.</p>
+                    </div>
+
+                    <div class="root-cause-card">
+                        <h4>2. Procedural Over-Focus vs. Conceptual Mastery</h4>
+                        <p><strong>The Problem:</strong> Curriculum prioritizes high-volume repetition of procedural tasks over conceptual understanding.</p>
+                        <p style="margin-top: 1rem;"><strong>Evidence:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Rocco repeated Metric Units 15 times but failed "Interpreting Fraction Division" (conceptual) 3 times</li>
+                            <li>Shepperd "completed" Prealgebra with only 40% quiz pass rate</li>
+                            <li>Students stuck in "Negative XP" loops without remediation</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Impact:</strong> Students "brute-force" through lessons without gaining true understanding.</p>
+                    </div>
+
+                    <div class="root-cause-card">
+                        <h4>3. Inverted Priority (Strength-Sapping Effect)</h4>
+                        <p><strong>The Problem:</strong> Curriculum directs students to work on their strengths rather than their weaknesses.</p>
+                        <p style="margin-top: 1rem;"><strong>Examples:</strong></p>
+                        <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                            <li>Bailey: 280 RIT in Geometry (strength), 260 in Number Systems (weakness) → received 126 Geometry activities, only 68 Number Systems</li>
+                            <li>Rhys: Weakness in Algebra → forced through high-level Algebra until score regressed by 7 points</li>
+                        </ul>
+                        <p style="margin-top: 1rem;"><strong>Impact:</strong> Students get better at what they're already good at while weaknesses persist.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Level-by-Level Breakdown</h2>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>% Below 2×</th>
+                            <th>Avg Growth (×)</th>
+                            <th>Primary Issue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LL (K-1)</td>
+                            <td>44%</td>
+                            <td>2.48</td>
+                            <td>Acceptable performance, slight improvement needed</td>
+                        </tr>
+                        <tr style="background-color: #fef5e7;">
+                            <td>L1 (Grades 2-3)</td>
+                            <td>59%</td>
+                            <td>1.85</td>
+                            <td>Below expectations, curriculum review needed</td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>L2 (Grades 4-5)</strong></td>
+                            <td><strong>78%</strong></td>
+                            <td><strong>1.29</strong></td>
+                            <td><strong>Critical: Curriculum doesn't transfer to MAP scores</strong></td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>MS (Middle School)</strong></td>
+                            <td><strong>66%</strong></td>
+                            <td><strong>1.22</strong></td>
+                            <td><strong>Critical: Content-to-test misalignment</strong></td>
+                        </tr>
+                        <tr style="background-color: #d4edda;">
+                            <td>HS (High School)</td>
+                            <td>16%</td>
+                            <td>5.09</td>
+                            <td>Strong performance, curriculum working well</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert-box">
+                    <strong>Critical Finding:</strong> L2 and MS students are struggling the most. These grade levels need immediate curriculum or instruction review.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Curriculum-Specific Analysis</h2>
+                
+                <h3>Struggling Curricula (L1/L2/MS Students)</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Curriculum</th>
+                            <th>Students</th>
+                            <th>% Below 2×</th>
+                            <th>Avg Growth (×)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #fadbd8;">
+                            <td>Math Academy - 5th Grade</td>
+                            <td>39</td>
+                            <td>72%</td>
+                            <td><strong>1.35</strong></td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td>Math Academy - Prealgebra</td>
+                            <td>72</td>
+                            <td>69%</td>
+                            <td><strong>1.18</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Zearn - Grade 3</td>
+                            <td>72</td>
+                            <td>~65%</td>
+                            <td>1.37</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 2rem;">High-Performing Curriculum</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Curriculum</th>
+                            <th>Students</th>
+                            <th>% Below 2×</th>
+                            <th>Avg Growth (×)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #d4edda;">
+                            <td>SAT Math Fundamentals</td>
+                            <td>31</td>
+                            <td>10%</td>
+                            <td><strong>8.60</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <strong>Why SAT Math Works:</strong> It produces 6.88-8.60× growth with similar RIT gains because of better test alignment at the HS level. The curriculum matches what NWEA MAP actually tests.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>The Curriculum-to-Test Misalignment Problem</h2>
+                
+                <h3>Math Academy Grade 4-6 Content Doesn't Transfer to MAP Scores</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Grade Mastered</th>
+                            <th>Curriculum Used</th>
+                            <th>% Below 2× Growth</th>
+                            <th>Avg MAP RIT Gain</th>
+                            <th>Avg R90 (Usage)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>3</td>
+                            <td>4th Grade</td>
+                            <td>58%</td>
+                            <td>12.1</td>
+                            <td>2.0</td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>4</strong></td>
+                            <td><strong>5th Grade</strong></td>
+                            <td><strong>72%</strong></td>
+                            <td><strong>8.8</strong></td>
+                            <td><strong>2.8</strong></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Prealgebra</td>
+                            <td>57%</td>
+                            <td>7.6</td>
+                            <td>4.3</td>
+                        </tr>
+                        <tr style="background-color: #d4edda;">
+                            <td><strong>8</strong></td>
+                            <td><strong>SAT Math Foundations</strong></td>
+                            <td><strong>29%</strong></td>
+                            <td><strong>8.0</strong></td>
+                            <td><strong>6.6</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="warning-box">
+                    <strong>The Pattern:</strong> Students working on Grade 4-5 content are:
+                    <ul style="margin-left: 1.5rem; margin-top: 0.75rem;">
+                        <li>Doing MORE work (R90 grades of 2.8-4.3) than Grade 3 students (R90 = 2.0)</li>
+                        <li>Getting LESS RIT growth (7.6-8.8 points vs 12.1 points)</li>
+                        <li>Not hitting 2× growth despite putting in the time</li>
+                    </ul>
+                </div>
+
+                <h3>Why This Happens: RIT 220-245 "Dead Zone"</h3>
+                <p>Students in this mid-range RIT band face unique challenges:</p>
+                <ul>
+                    <li><strong>Content gaps:</strong> Topics covered don't match what NWEA MAP tests at grades 4-5 (fractions, decimals, ratios, early algebra, geometry)</li>
+                    <li><strong>Pacing issues:</strong> Students move through MA content but don't get enough practice on MAP-relevant skills</li>
+                    <li><strong>Depth vs breadth mismatch:</strong> MA goes deep on certain topics while MAP tests breadth across grade-level standards</li>
+                    <li><strong>Ceiling effects:</strong> Not low enough for intensive intervention, not advanced enough for HS content benefits</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>Campus-Level Findings</h2>
+                
+                <div class="alert-box">
+                    <strong>Alpha School Austin Requires Immediate Attention:</strong> With 131 students (28% of total enrollment), Austin shows 74% below 2× growth with average growth of only 1.25×. This concentration of underperformance suggests systemic implementation issues beyond curriculum design.
+                </div>
+
+                <h3>Campus Performance Summary</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Campus</th>
+                            <th>Students</th>
+                            <th>Avg Growth (×)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #d4edda;">
+                            <td>Alpha High School</td>
+                            <td>41</td>
+                            <td>7.96</td>
+                            <td>Excellent</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha School Miami</td>
+                            <td>58</td>
+                            <td>2.45</td>
+                            <td>Above average</td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>Alpha School Austin</strong></td>
+                            <td><strong>131</strong></td>
+                            <td><strong>1.25</strong></td>
+                            <td><strong>Critical concern</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Nova Academy Austin</td>
+                            <td>15</td>
+                            <td>1.14</td>
+                            <td>Below target</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2>Comprehensive Recommendations</h2>
+
+                <div class="recommendation-section">
+                    <h3>1. Implement MAP-Informed Placement</h3>
+                    <p><strong>Stop placing students based on chronological grade or generic curriculum labels.</strong></p>
+                    <p style="margin-top: 1rem;"><strong>Action:</strong> Sync MAP RIT scores to curriculum weekly. If a student's Number Systems RIT is &lt;225, the system should lock advanced Algebra modules until specific Grade 6 "Bridge Topics" (integers, absolute value, coordinate plane) are mastered.</p>
+                </div>
+
+                <div class="recommendation-section">
+                    <h3>2. Create a "Bridge Module" for Grade 6</h3>
+                    <p><strong>Build a mandatory 4-week intensive module covering:</strong></p>
+                    <ul>
+                        <li><strong>Integer Fluency:</strong> All four operations with negative numbers</li>
+                        <li><strong>Ratios & Proportions:</strong> The missing middle school bridge content</li>
+                        <li><strong>Statistics & Probability:</strong> Moving beyond line plots to measures of center (mean/median/mode)</li>
+                        <li><strong>Coordinate Plane:</strong> All four quadrants with integer coordinates</li>
+                        <li><strong>Absolute Value:</strong> Conceptual understanding and applications</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-section">
+                    <h3>3. Shift from "Retake" to "Remediate"</h3>
+                    <p><strong>Implement a "Circuit Breaker" Rule:</strong> After 3 failed attempts at a topic:</p>
+                    <ul>
+                        <li>Forward progression stops automatically</li>
+                        <li>System drops student back to a prerequisite skill one grade level lower</li>
+                        <li>Student must pass 3 consecutive "High Success" lessons to rebuild confidence</li>
+                        <li>Only then return to target topic</li>
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Why:</strong> Currently, students fail topics 10+ times without intervention. This creates "spinning wheels" phenomenon—high activity, zero learning.</p>
+                </div>
+
+                <div class="recommendation-section">
+                    <h3>4. Rebalance Activity Weighting</h3>
+                    <p><strong>Force curriculum to prioritize lowest RIT domain:</strong></p>
+                    <ul>
+                        <li>Algorithm ensures 2:1 ratio of activities in Weakness vs. Strength domains</li>
+                        <li>Continue until RIT scores are within 5-10 points of each other</li>
+                        <li>Cap activities in strength areas once mastery demonstrated</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-section">
+                    <h3>5. Audit Grade 4-5 Content Against NWEA MAP</h3>
+                    <p><strong>Immediate Actions:</strong></p>
+                    <ul>
+                        <li>Map MA Grade 4-5 content to NWEA MAP RIT bands 200-240</li>
+                        <li>Identify coverage gaps in Number Systems and Statistics domains</li>
+                        <li>Add MAP-aligned practice for students in 5th Grade and Prealgebra courses</li>
+                        <li>Supplement Prealgebra students with targeted practice in: operations with fractions/decimals, ratios & proportions, expressions & equations</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation-section">
+                    <h3>6. Address Alpha School Austin Specifically</h3>
+                    <p><strong>With 131 students showing 1.25× average growth:</strong></p>
+                    <ul>
+                        <li>Conduct site visit to understand implementation differences</li>
+                        <li>Review teacher training and support structures</li>
+                        <li>Investigate if curriculum pacing or usage differs from other campuses</li>
+                        <li>Provide targeted professional development</li>
+                        <li>Consider pilot interventions at this campus first given large sample size</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Conclusion</h2>
+                <p>The data reveals this is <strong>not an effort problem</strong>—students are putting in the time (R90 grades show consistent usage). This is a <strong>curriculum alignment problem</strong>. The gap between what students are learning and what NWEA MAP tests is particularly severe in the RIT 220-245 range (Grades 4-6).</p>
+                
+                <p style="margin-top: 1rem;">The good news: <strong>we know what works</strong>. SAT Math Fundamentals achieves 8.60× growth because it aligns with what's tested. We need to apply those same principles to middle school content.</p>
+
+                <div class="success-box" style="margin-top: 1.5rem;">
+                    <strong>Path Forward:</strong> By implementing MAP-informed placement, creating targeted bridge modules, establishing remediation loops, and rebalancing curriculum priorities, we can move the 227 students currently below 2× growth toward their predicted performance levels. The curriculum has the right content—it's the sequencing and emphasis that need adjustment.
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Math Growth Analysis System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

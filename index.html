@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Growth Analysis Report - Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #34495e;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav li {
+            margin: 0;
+        }
+
+        nav a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #2c3e50;
+        }
+
+        nav a.active {
+            background-color: #1a252f;
+            font-weight: 600;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .content-card {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-box {
+            background: #ecf0f1;
+            padding: 1.5rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-box.alert {
+            background: #fadbd8;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .stat-box.warning {
+            background: #fef5e7;
+            border-left: 4px solid #f39c12;
+        }
+
+        .stat-box.success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .overview-section {
+            margin: 1.5rem 0;
+        }
+
+        .alert-box {
+            background-color: #fadbd8;
+            border-left: 4px solid #e74c3c;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .key-finding {
+            background: #e8f4f8;
+            border-left: 4px solid #3498db;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th {
+            background-color: #34495e;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Math Growth Analysis Report</h1>
+            <p class="subtitle">Fall 2025 to Winter 2026 | K-8 Math Performance Analysis</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="executive-summary.html">Executive Summary</a></li>
+            <li><a href="struggling-students.html">Struggling Students</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="content-card">
+                <h2>Executive Overview</h2>
+                <p>This comprehensive analysis examines why 57% of math students (227 out of 398) did not achieve 2× growth from Fall 2025 to Winter 2026. The data reveals critical curriculum misalignment issues, particularly at the middle school level, where students are working on content that doesn't align with NWEA MAP assessment requirements.</p>
+                
+                <div class="alert-box">
+                    <strong>Critical Finding:</strong> Average actual growth was only 2.08× versus 2.65× predicted—a 22% shortfall. The root causes are curriculum-level issues, not individual student effort problems.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Overall Performance Metrics</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-number">465</span>
+                        <span class="stat-label">Total Students Analyzed</span>
+                    </div>
+                    <div class="stat-box warning">
+                        <span class="stat-number">57%</span>
+                        <span class="stat-label">Below 2× Growth Target</span>
+                    </div>
+                    <div class="stat-box alert">
+                        <span class="stat-number">2.08×</span>
+                        <span class="stat-label">Average Actual Growth (vs 2.65× predicted)</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-number">398</span>
+                        <span class="stat-label">Students with Growth Data</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Performance by School Level</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Level</th>
+                            <th>Description</th>
+                            <th>Student Count</th>
+                            <th>Avg Growth (×)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>HS</strong></td>
+                            <td>High School</td>
+                            <td>63</td>
+                            <td><strong style="color: #28a745;">5.09</strong></td>
+                            <td><span style="background: #d4edda; padding: 0.25rem 0.5rem; border-radius: 4px;">Strong Performance</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>LL</strong></td>
+                            <td>Lower Level (K-1)</td>
+                            <td>81</td>
+                            <td>2.48</td>
+                            <td><span style="background: #fff3cd; padding: 0.25rem 0.5rem; border-radius: 4px;">Below Target</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>L1</strong></td>
+                            <td>Level 1 (Grades 2-3)</td>
+                            <td>99</td>
+                            <td style="color: #e67e22;">1.85</td>
+                            <td><span style="background: #fef5e7; padding: 0.25rem 0.5rem; border-radius: 4px;">Needs Attention</span></td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>L2</strong></td>
+                            <td>Level 2 (Grades 4-5)</td>
+                            <td>100</td>
+                            <td style="color: #e74c3c;"><strong>1.29</strong></td>
+                            <td><span style="background: #f8d7da; padding: 0.25rem 0.5rem; border-radius: 4px;">Critical Issue</span></td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>MS</strong></td>
+                            <td>Middle School</td>
+                            <td>121</td>
+                            <td style="color: #e74c3c;"><strong>1.22</strong></td>
+                            <td><span style="background: #f8d7da; padding: 0.25rem 0.5rem; border-radius: 4px;">Critical Issue</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="key-finding">
+                    <strong>Key Finding:</strong> L2 (Grades 4-5) and MS (Middle School) students are struggling the most, with average growth of only 1.29× and 1.22× respectively. This represents the primary area of concern requiring immediate intervention.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Top Curriculum Issues</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Curriculum</th>
+                            <th>Students</th>
+                            <th>Avg Growth (×)</th>
+                            <th>Issue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background-color: #d4edda;">
+                            <td>SAT Math Fundamentals</td>
+                            <td>31</td>
+                            <td><strong style="color: #28a745;">8.60</strong></td>
+                            <td>Working well - only 10% below 2×</td>
+                        </tr>
+                        <tr>
+                            <td>Zearn Grade 2</td>
+                            <td>70</td>
+                            <td>2.28</td>
+                            <td>Acceptable performance</td>
+                        </tr>
+                        <tr>
+                            <td>Zearn Grade 1</td>
+                            <td>37</td>
+                            <td>2.08</td>
+                            <td>Meeting baseline expectations</td>
+                        </tr>
+                        <tr style="background-color: #fef5e7;">
+                            <td>Math Academy 4th Grade</td>
+                            <td>53</td>
+                            <td style="color: #e67e22;">1.66</td>
+                            <td>Below expectations</td>
+                        </tr>
+                        <tr style="background-color: #fef5e7;">
+                            <td>Zearn Grade 3</td>
+                            <td>72</td>
+                            <td style="color: #e67e22;">1.37</td>
+                            <td>Insufficient for middle schoolers</td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td>Math Academy 5th Grade</td>
+                            <td>39</td>
+                            <td style="color: #e74c3c;"><strong>1.35</strong></td>
+                            <td><strong>Missing Grade 6 integer operations</strong></td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td>Math Academy Prealgebra</td>
+                            <td>72</td>
+                            <td style="color: #e74c3c;"><strong>1.18</strong></td>
+                            <td><strong>Teaching Alg II content with Grade 6 gaps</strong></td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td>MA Integrated Math I (Honors)</td>
+                            <td>11</td>
+                            <td style="color: #e74c3c;"><strong>0.50</strong></td>
+                            <td><strong>Severe curriculum mismatch</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert-box">
+                    <strong>Critical Issue:</strong> Math Academy Prealgebra (72 students) and Grade 5 (39 students) have systemic gaps. Both courses skip critical Grade 6 Number Systems content (integer operations, absolute value, coordinate plane) that NWEA MAP tests heavily.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Campus Performance Highlights</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Campus</th>
+                            <th>Students</th>
+                            <th>Avg Growth (×)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alpha High School</td>
+                            <td>41</td>
+                            <td style="color: #28a745;"><strong>7.96</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Alpha School Santa Barbara</td>
+                            <td>8</td>
+                            <td>4.51</td>
+                        </tr>
+                        <tr>
+                            <td>GT School</td>
+                            <td>22</td>
+                            <td>3.05</td>
+                        </tr>
+                        <tr>
+                            <td>Montessorium Cedar Park</td>
+                            <td>12</td>
+                            <td>2.67</td>
+                        </tr>
+                        <tr>
+                            <td>Alpha School Miami</td>
+                            <td>58</td>
+                            <td>2.45</td>
+                        </tr>
+                        <tr style="background-color: #fadbd8;">
+                            <td><strong>Alpha School Austin</strong></td>
+                            <td><strong>131</strong></td>
+                            <td style="color: #e74c3c;"><strong>1.25</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Nova Academy Austin</td>
+                            <td>15</td>
+                            <td>1.14</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert-box">
+                    <strong>Alpha School Austin Alert:</strong> With 131 students (28% of total), Austin has the lowest growth at only 1.25×. This requires immediate investigation—74% of students are below 2× growth.
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Report Sections</h2>
+                <div class="overview-section">
+                    <h3>Executive Summary</h3>
+                    <p>Deep analysis of the three root causes: the Grade 6 Number Systems "black hole," procedural over-focus versus conceptual mastery, and inverted curriculum priorities that emphasize student strengths instead of weaknesses.</p>
+                </div>
+                <div class="overview-section">
+                    <h3>Struggling Students Analysis</h3>
+                    <p>Detailed case studies of individual students (Rocco, Ellen, Shepperd, Rhys, Bailey, Vayda) showing specific curriculum misalignments and concrete recommendations for remediation.</p>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Data Collection Period</h2>
+                <p><strong>Analysis Period:</strong> Fall 2025 to Winter 2026</p>
+                <p><strong>Report Generated:</strong> January 30, 2026</p>
+                <p><strong>Students Analyzed:</strong> 465 total, 398 with complete growth data</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Math Growth Analysis System. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
