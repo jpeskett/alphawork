@@ -1,0 +1,326 @@
+import type { EntityManager } from 'typeorm';
+import type { Logger } from '@aws-lambda-powertools/logger';
+import { getAppLogger } from '../../common/utils/logger';
+import { BrainliftEncounterRepository } from '../repositories/brainlift-encounter.repository';
+
+/**
+ * The three encounter stages of the Brainlift Method.
+ *
+ * E1 → E2 → E3 → MASTERED          (complex KCs)
+ * E1 → E2 → MASTERED                (simple KCs)
+ *
+ * currentStage always represents the NEXT encounter to be delivered,
+ * not the one just completed.
+ */
+export enum EncounterStage {
+  E1 = 'E1',
+  E2 = 'E2',
+  E3 = 'E3',
+  MASTERED = 'MASTERED',
+}
+
+/**
+ * SIMPLE: single-structure KCs that only need E1 + E2.
+ * COMPLEX: integrative/procedural KCs that require multiple E3 rounds
+ *          to achieve durable flexible use.
+ */
+export enum KCComplexity {
+  SIMPLE = 'SIMPLE',
+  COMPLEX = 'COMPLEX',
+}
+
+/**
+ * Days from E1 completion → E2 scheduling.
+ *
+ * Target: enough elapsed time for partial forgetting so E2 retrieval
+ * is effortful. Mid-point of the 2–7 day specification window.
+ */
+const E2_DELAY_DAYS = 3;
+
+/**
+ * Days from E2 completion → first E3 scheduling.
+ *
+ * Target: consolidation window (1–2 weeks). First E3 at the shorter
+ * end — the skill is fresh enough to succeed, far enough for spacing.
+ */
+const E3_FIRST_DELAY_DAYS = 7;
+
+/**
+ * Maps completed E3 round count → days until the next encounter.
+ * null signals that the KC is mastered after this round.
+ *
+ * Round 1 passed → schedule round 2 in 14 days
+ * Round 2 passed → schedule round 3 in 30 days
+ * Round 3 passed → MASTERED (null)
+ */
+const E3_ROUND_SPACING: ReadonlyMap<number, number | null> = new Map([
+  [1, 14],
+  [2, 30],
+  [3, null],
+]);
+
+export interface ProcessE1CompletionInput {
+  readonly kcId: string;
+  readonly studentId: string;
+  readonly kcComplexity: KCComplexity;
+}
+
+export interface ProcessE2CompletionInput {
+  readonly kcId: string;
+  readonly studentId: string;
+}
+
+export interface ProcessE3CompletionInput {
+  readonly kcId: string;
+  readonly studentId: string;
+  /**
+   * False if the student failed the majority of E3 items without recovery.
+   * Triggers a regression to E2 rather than advancing the round count.
+   *
+   * Note: within-session failures handled by the encounter itself (targeted
+   * feedback). This flag reflects overall session outcome only.
+   */
+  readonly passed: boolean;
+}
+
+/**
+ * Service for scheduling Brainlift Method encounters.
+ *
+ * The Brainlift Method schedules three types of encounter for each KC:
+ * - E1 (Learn it): full instructional sequence, explicit scaffolding
+ * - E2 (Remember it): spaced retrieval with successive relearning on failure
+ * - E3 (Use it flexibly): interleaved practice, no scaffolding, transfer focus
+ *
+ * This service handles:
+ * - Creating the encounter record when E1 completes and scheduling E2
+ * - Advancing E2 → E3 (complex) or E2 → MASTERED (simple)
+ * - Advancing E3 rounds or regressing to E2 on failure
+ */
+export class BrainliftEncounterService {
+  constructor(
+    private readonly encounterRepository: Promise<BrainliftEncounterRepository> = BrainliftEncounterRepository.create(),
+    private readonly logger: Logger = getAppLogger(BrainliftEncounterService.name),
+  ) {}
+
+  /**
+   * Process completion of E1 for a KC.
+   *
+   * E1 is the full instructional sequence (teach → model → supported practice
+   * → independent practice). On completion, schedule E2 at the partial-
+   * forgetting window.
+   */
+  async processE1Completion(
+    input: ProcessE1CompletionInput,
+    entityManager?: EntityManager,
+  ): Promise<void> {
+    const { kcId, studentId, kcComplexity } = input;
+
+    this.logger.info('Processing E1 completion', { kcComplexity, kcId, studentId });
+
+    const now = new Date();
+    const nextEncounterAt = this.addDays(now, E2_DELAY_DAYS);
+
+    const repository = await this.encounterRepository;
+    await repository.upsert(
+      {
+        currentStage: EncounterStage.E2,
+        e3RoundsCompleted: 0,
+        kcComplexity,
+        kcId,
+        lastEncounterAt: now,
+        nextEncounterAt,
+        studentId,
+      },
+      entityManager,
+    );
+
+    this.logger.info('E1 complete — E2 scheduled', {
+      e2ScheduledFor: nextEncounterAt.toISOString(),
+      kcId,
+      studentId,
+    });
+  }
+
+  /**
+   * Process completion of E2 for a KC.
+   *
+   * E2 uses successive relearning internally (retrieve → fail → mini-review
+   * → retrieve again). By the time this method is called the student has
+   * successfully retrieved — with or without the mini-review. No failure
+   * input is needed here; failure handling is the encounter's responsibility.
+   *
+   * Simple KC  → MASTERED immediately.
+   * Complex KC → schedule first E3 at the consolidation window.
+   */
+  async processE2Completion(
+    input: ProcessE2CompletionInput,
+    entityManager?: EntityManager,
+  ): Promise<void> {
+    const { kcId, studentId } = input;
+
+    this.logger.info('Processing E2 completion', { kcId, studentId });
+
+    const repository = await this.encounterRepository;
+    const existing = await repository.findByStudentAndKC(studentId, kcId);
+
+    if (!existing) {
+      this.logger.warn('No encounter record found for E2 completion — skipping', {
+        kcId,
+        studentId,
+      });
+      return;
+    }
+
+    const now = new Date();
+
+    if (existing.kcComplexity === KCComplexity.SIMPLE) {
+      await repository.upsert(
+        {
+          currentStage: EncounterStage.MASTERED,
+          e3RoundsCompleted: 0,
+          kcComplexity: existing.kcComplexity,
+          kcId,
+          lastEncounterAt: now,
+          nextEncounterAt: null,
+          studentId,
+        },
+        entityManager,
+      );
+
+      this.logger.info('E2 complete — simple KC mastered', { kcId, studentId });
+      return;
+    }
+
+    const nextEncounterAt = this.addDays(now, E3_FIRST_DELAY_DAYS);
+
+    await repository.upsert(
+      {
+        currentStage: EncounterStage.E3,
+        e3RoundsCompleted: 0,
+        kcComplexity: existing.kcComplexity,
+        kcId,
+        lastEncounterAt: now,
+        nextEncounterAt,
+        studentId,
+      },
+      entityManager,
+    );
+
+    this.logger.info('E2 complete — E3 scheduled', {
+      e3ScheduledFor: nextEncounterAt.toISOString(),
+      kcId,
+      studentId,
+    });
+  }
+
+  /**
+   * Process completion of an E3 session for a KC.
+   *
+   * Passed: increment round count and check mastery map.
+   *   - More rounds remain → schedule next E3 at the expanding interval.
+   *   - Final round complete → MASTERED.
+   *
+   * Failed: regression to E2. The student cannot flexibly apply the skill
+   *   yet; re-consolidation via blocked retrieval is required before
+   *   interleaving is attempted again.
+   */
+  async processE3Completion(
+    input: ProcessE3CompletionInput,
+    entityManager?: EntityManager,
+  ): Promise<void> {
+    const { kcId, passed, studentId } = input;
+
+    this.logger.info('Processing E3 completion', { kcId, passed, studentId });
+
+    const repository = await this.encounterRepository;
+    const existing = await repository.findByStudentAndKC(studentId, kcId);
+
+    if (!existing) {
+      this.logger.warn('No encounter record found for E3 completion — skipping', {
+        kcId,
+        studentId,
+      });
+      return;
+    }
+
+    const now = new Date();
+
+    if (!passed) {
+      const nextEncounterAt = this.addDays(now, E2_DELAY_DAYS);
+
+      await repository.upsert(
+        {
+          currentStage: EncounterStage.E2,
+          e3RoundsCompleted: existing.e3RoundsCompleted,
+          kcComplexity: existing.kcComplexity,
+          kcId,
+          lastEncounterAt: now,
+          nextEncounterAt,
+          studentId,
+        },
+        entityManager,
+      );
+
+      this.logger.info('E3 failed — regressed to E2', {
+        e2RescheduledFor: nextEncounterAt.toISOString(),
+        kcId,
+        previousE3Rounds: existing.e3RoundsCompleted,
+        studentId,
+      });
+      return;
+    }
+
+    const newRoundCount = existing.e3RoundsCompleted + 1;
+    const nextDelayDays = E3_ROUND_SPACING.get(newRoundCount);
+
+    if (nextDelayDays === null || nextDelayDays === undefined) {
+      await repository.upsert(
+        {
+          currentStage: EncounterStage.MASTERED,
+          e3RoundsCompleted: newRoundCount,
+          kcComplexity: existing.kcComplexity,
+          kcId,
+          lastEncounterAt: now,
+          nextEncounterAt: null,
+          studentId,
+        },
+        entityManager,
+      );
+
+      this.logger.info('E3 complete — KC mastered', {
+        e3RoundsCompleted: newRoundCount,
+        kcId,
+        studentId,
+      });
+      return;
+    }
+
+    const nextEncounterAt = this.addDays(now, nextDelayDays);
+
+    await repository.upsert(
+      {
+        currentStage: EncounterStage.E3,
+        e3RoundsCompleted: newRoundCount,
+        kcComplexity: existing.kcComplexity,
+        kcId,
+        lastEncounterAt: now,
+        nextEncounterAt,
+        studentId,
+      },
+      entityManager,
+    );
+
+    this.logger.info('E3 complete — next E3 scheduled', {
+      e3RoundsCompleted: newRoundCount,
+      kcId,
+      nextE3ScheduledFor: nextEncounterAt.toISOString(),
+      studentId,
+    });
+  }
+
+  private addDays(date: Date, days: number): Date {
+    const result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+  }
+}
